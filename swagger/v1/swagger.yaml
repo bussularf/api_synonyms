@@ -4,12 +4,47 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/auth/login":
+    post:
+      summary: create token and user admin
+      tags:
+      - auth
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  exp:
+                    type: string
+                  username:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  format: password
+              required:
+              - data
   "/api/v1":
     get:
       summary: list words
       responses:
         '200':
           description: successful
+        '400':
+          description: bad request
   "/api/v1/words/create_synonym_and_word":
     parameters:
     - name: reference
@@ -26,36 +61,17 @@ paths:
       summary: create_synonym_and_word
       responses:
         '201':
-          description: successful
+          description: synonym and/or word created
         '422':
           description: invalid request
-  "/users/sign_in":
-    post:
-      summary: Signs in a user
-      tags:
-      - Sessions
-      parameters:
-      - name: user[username]
-        in: query
-        description: username
-        schema:
-          type: string
-      - name: user[password]
-        in: query
-        description: password
-        schema:
-          type: string
-      responses:
-        '200':
-          description: user signed in
-        '401':
-          description: invalid login credentials
   "/api/v1/words/get_unreviewed_synonyms":
     get:
       summary: get_unreviewed_synonyms word
       responses:
         '200':
           description: successful
+        '400':
+          description: bad request
   "/api/v1/words/authorize_synonym":
     parameters:
     - name: reference
@@ -73,6 +89,8 @@ paths:
       responses:
         '200':
           description: successful
+        '400':
+          description: bad request
   "/api/v1/words/delete_synonym":
     parameters:
     - name: reference
@@ -90,6 +108,8 @@ paths:
       responses:
         '200':
           description: successful
+        '400':
+          description: bad request
 servers:
 - url: http://{defaultHost}
   variables:

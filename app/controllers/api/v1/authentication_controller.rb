@@ -1,13 +1,18 @@
-module API
+require 'debug'
+
+require Rails.root.join('lib', 'json_web_token')
+
+module Api
   module V1
     class AuthenticationController < ApplicationController
       def login
-        @user = User.find_by(name: params[:name])
-        if @user&.authenticate!(params[:name], params[:password])
+        @user = User.find_by(username: params[:username])
+        binding.b
+        if @user&.custom_authenticate(params[:username], params[:password])
           token = JsonWebToken.encode(user_id: @user.id)
           time = Time.zone.now + 24.hours.to_i
-          render json: { token: token, exp: time.strftime('%m-%d-%Y %H:%M'),
-                        name: @user.name }, status: :created
+          render json: { token: token, expires: time.strftime('%m-%d-%Y %H:%M'),
+                        username: @user.username }, status: :created
         else
           render json: { error: 'unauthorized' }, status: :unauthorized
         end

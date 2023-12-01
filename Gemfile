@@ -54,3 +54,9 @@ group :development do
   # gem "spring"
 end
 
+
+gem "dockerfile-rails", ">= 1.5", :group => :development
+
+gem "sentry-ruby", "~> 5.14"
+
+gem "sentry-rails", "~> 5.14"

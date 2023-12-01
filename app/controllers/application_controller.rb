@@ -1,4 +1,6 @@
+require 'debug'
 class ApplicationController < ActionController::API
+  # rubocop:enable Lint/DuplicateBranch
   def authorize_request
     header = request.headers['Authorization']
     header = header.split.last if header
@@ -10,10 +12,5 @@ class ApplicationController < ActionController::API
     rescue JWT::DecodeError => e
       render json: { errors: e.message }, status: :unauthorized
     end
-  end
-  # rubocop:enable Lint/DuplicateBranch
-
-  def route_not_found
-    render 'error_pages/404', status: :not_found
   end
 end

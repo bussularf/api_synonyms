@@ -1,10 +1,13 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable,
-         :recoverable
+  devise :database_authenticatable, :registerable, :recoverable
 
-  def authenticate!(username, password)
-    user = User.find_for_database_authentication(name: username)
+  def custom_authenticate(username, password)
+    user = User.find_for_database_authentication(username: username)
 
-    user if user.valid_for_authentication? { user.valid_password?(password) } && user.active_for_authentication?
+    if user&.valid_for_authentication? && user&.valid_password?(password) && user&.active_for_authentication?
+      return user
+    else
+      return nil
+    end
   end
 end
