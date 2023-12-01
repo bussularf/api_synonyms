@@ -1,0 +1,97 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1":
+    get:
+      summary: list words
+      responses:
+        '200':
+          description: successful
+  "/api/v1/words/create_synonym_and_word":
+    parameters:
+    - name: reference
+      in: query
+      description: word
+      schema:
+        type: string
+    - name: synonym
+      in: query
+      description: synonym
+      schema:
+        type: string
+    post:
+      summary: create_synonym_and_word
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: invalid request
+  "/users/sign_in":
+    post:
+      summary: Signs in a user
+      tags:
+      - Sessions
+      parameters:
+      - name: user[username]
+        in: query
+        description: username
+        schema:
+          type: string
+      - name: user[password]
+        in: query
+        description: password
+        schema:
+          type: string
+      responses:
+        '200':
+          description: user signed in
+        '401':
+          description: invalid login credentials
+  "/api/v1/words/get_unreviewed_synonyms":
+    get:
+      summary: get_unreviewed_synonyms word
+      responses:
+        '200':
+          description: successful
+  "/api/v1/words/authorize_synonym":
+    parameters:
+    - name: reference
+      in: query
+      description: word
+      schema:
+        type: string
+    - name: synonym
+      in: query
+      description: synonym
+      schema:
+        type: string
+    put:
+      summary: authorize_synonym word
+      responses:
+        '200':
+          description: successful
+  "/api/v1/words/delete_synonym":
+    parameters:
+    - name: reference
+      in: query
+      description: word
+      schema:
+        type: string
+    - name: synonym
+      in: query
+      description: synonym
+      schema:
+        type: string
+    delete:
+      summary: delete_synonym word
+      responses:
+        '200':
+          description: successful
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000/
