@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :words, except: :index do
         collection do
           post 'create_synonym_and_word'
-          get 'get_unreviewed_synonyms'
+          get 'unreviewed_synonyms'
           put 'authorize_synonym'
           delete 'delete_synonym'
         end

@@ -48,21 +48,21 @@ RSpec.describe 'api/v1/words', type: :request do
     end
   end
 
-  path '/api/v1/words/get_unreviewed_synonyms' do
+  path '/api/v1/words/unreviewed_synonyms' do
     let(:current_owner) { create(:user) }
     let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
   
     context 'when unauthorized' do
-      before { get '/api/v1/words/get_unreviewed_synonyms' }
+      before { get '/api/v1/words/unreviewed_synonyms' }
   
       it { expect(response).to have_http_status(:unauthorized) }
     end
   
-    get('get_unreviewed_synonyms word') do
+    get('unreviewed_synonyms word') do
       response(200, 'successful') do
         before do
           allow_any_instance_of(Api::V1::AuthenticationController).to receive(:custom_authenticate).and_return(current_owner)
-          get '/api/v1/words/get_unreviewed_synonyms', headers: { 'Authorization' => "Bearer #{token}" }
+          get '/api/v1/words/unreviewed_synonyms', headers: { 'Authorization' => "Bearer #{token}" }
         end
   
         after do |example|

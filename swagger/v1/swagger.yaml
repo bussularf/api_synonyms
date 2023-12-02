@@ -64,9 +64,9 @@ paths:
           description: synonym and/or word created
         '422':
           description: invalid request
-  "/api/v1/words/get_unreviewed_synonyms":
+  "/api/v1/words/unreviewed_synonyms":
     get:
-      summary: get_unreviewed_synonyms word
+      summary: unreviewed_synonyms word
       responses:
         '200':
           description: successful
