@@ -57,27 +57,18 @@ query {
 ### View for One Level of Synonyms (Synonyms_Synonyms_VIEW)
 
 ```
-CREATE VIEW Synonyms_Synonyms_VIEW AS
-SELECT DISTINCT w.reference AS word, s.synonym AS synonym
+CREATE VIEW Synonyms_View1 AS
+SELECT w.reference AS word, s.reference AS synonym
 FROM words w
-JOIN synonyms s ON w.id = s.word_id;
+LEFT OUTER JOIN synonyms s ON w.id = s.word_id;
+WHERE w.reference = 'good'
+
+SELECT * FROM synonyms_synonyms_view ssv 
 
 ```
 
 ### View for the Last Level of Synonyms (Synonyms_Synonyms_VIEW2)
 
 ```
-CREATE VIEW Synonyms_Synonyms_VIEW2 AS
-WITH RECURSIVE RecursiveSynonyms AS (
-  SELECT w.reference AS word, s.synonym, 1 AS level
-  FROM words w
-  JOIN synonyms s ON w.id = s.word_id
-  UNION ALL
-  SELECT rs.word, s.synonym, rs.level + 1
-  FROM RecursiveSynonyms rs
-  JOIN synonyms s ON rs.synonym = s.word_id
-)
-SELECT word, synonym
-FROM RecursiveSynonyms
-WHERE level = (SELECT MAX(level) FROM RecursiveSynonyms);
+
 ```
