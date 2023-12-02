@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       post '/auth/login', to: 'authentication#login'
-      root to: 'words#index'
+      root '/api-docs/index.html', to: 'words#index'
       resources :words do
         collection do
           post 'create_synonym_and_word'
