@@ -7,10 +7,12 @@ Rails.application.routes.draw do
       post '/auth/login', to: 'authentication#login'
       root to: 'words#index'
       resources :words do
-        post 'create_synonym_and_word'
-        get 'unreviewed_synonyms'
-        put 'authorize_synonym'
-        delete 'delete_synonym'
+        collection do
+          post 'create_synonym_and_word'
+          get 'unreviewed_synonyms'
+          put 'authorize_synonym'
+          delete 'delete_synonym'
+        end
       end
     end
   end
