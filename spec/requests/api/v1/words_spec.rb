@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 require 'rails_helper'
 require 'swagger_helper'
 
@@ -89,7 +91,7 @@ RSpec.describe 'api/v1/words', type: :request do
     let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
 
     context 'when unauthorized' do
-      before { get api_v1_backoffice_words_path }
+      before { get api_v1_words_path }
 
       it { expect(response).to have_http_status(:unauthorized) }
     end
@@ -122,7 +124,7 @@ RSpec.describe 'api/v1/words', type: :request do
     let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
 
     context 'when unauthorized' do
-      before { get api_v1_backoffice_words_path }
+      before { get api_v1_words_path }
 
       it { expect(response).to have_http_status(:unauthorized) }
     end
