@@ -27,7 +27,7 @@ RSpec.configure do |config|
           url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'api-synonyms.fly.dev/'
+              default: 'api-synonyms.fly.dev/api-docs/index.html'
             }
           }
         }
