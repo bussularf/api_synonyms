@@ -79,5 +79,4 @@ GROUP BY w.reference;
 
 SELECT * FROM synonyms_count_view
 
-
 ```
