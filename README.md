@@ -54,7 +54,7 @@ query {
 
 ```
 
-### View for One Level of Synonyms (Synonyms_Synonyms_VIEW)
+### View for One Level of Synonyms
 
 ```
 CREATE VIEW Synonyms_View AS
@@ -66,8 +66,6 @@ WHERE w.reference = 'good';
 SELECT * FROM synonyms_view 
 
 ```
-
-### View for the Last Level of Synonyms (Synonyms_Synonyms_VIEW2)
 
 ```
 CREATE VIEW Synonyms_Count_View AS
