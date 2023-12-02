@@ -1,16 +1,13 @@
-# fly.toml app configuration file generated for api-synonyms-red-tree-7842 on 2023-12-01T23:46:47-03:00
+# fly.toml app configuration file generated for api-synonyms on 2023-12-02T00:47:47-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "api-synonyms-red-tree-7842"
+app = "api-synonyms"
 primary_region = "gru"
 console_command = "/rails/bin/rails console"
 
 [build]
-
-[deploy]
-  release_command = "./bin/rails db:prepare"
 
 [http_service]
   internal_port = 3000
