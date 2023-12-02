@@ -57,18 +57,27 @@ query {
 ### View for One Level of Synonyms (Synonyms_Synonyms_VIEW)
 
 ```
-CREATE VIEW Synonyms_View1 AS
+CREATE VIEW Synonyms_View AS
 SELECT w.reference AS word, s.reference AS synonym
 FROM words w
-LEFT OUTER JOIN synonyms s ON w.id = s.word_id;
-WHERE w.reference = 'good'
+JOIN synonyms s ON w.id = s.word_id
+WHERE w.reference = 'good';
 
-SELECT * FROM synonyms_synonyms_view ssv 
+SELECT * FROM synonyms_view 
 
 ```
 
 ### View for the Last Level of Synonyms (Synonyms_Synonyms_VIEW2)
 
 ```
+CREATE VIEW Synonyms_Count_View AS
+SELECT w.reference AS word, COUNT(s.word_id) AS number
+FROM words w
+LEFT OUTER JOIN synonyms s ON w.id = s.word_id
+WHERE w.reference = 'good' AND s.status = 0
+GROUP BY w.reference;
+
+SELECT * FROM synonyms_count_view
+
 
 ```
