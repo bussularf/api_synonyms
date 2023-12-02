@@ -114,4 +114,4 @@ servers:
 - url: http://{defaultHost}
   variables:
     defaultHost:
-      default: 'http://api-synonyms.fly.dev/'
+      default: http://api-synonyms.fly.dev/
