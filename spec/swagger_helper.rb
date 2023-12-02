@@ -27,7 +27,7 @@ RSpec.configure do |config|
           url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: '0.0.0.0:3000/'
+              default: 'api-synonyms-5ba648b892a3.herokuapp.com/'
             }
           }
         }
