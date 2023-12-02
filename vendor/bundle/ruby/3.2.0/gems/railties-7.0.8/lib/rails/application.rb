@@ -414,7 +414,7 @@ module Rails
     # the correct place to store it is in the encrypted credentials file.
     def secret_key_base
       if Rails.env.development? || Rails.env.test?
-        secrets.secret_key_base ||= generate_development_secret
+        secrets.secret_key_base ||= generate_development_secret || credentials.secret_key_base
       else
         validate_secret_key_base(
           ENV["SECRET_KEY_BASE"] || credentials.secret_key_base || secrets.secret_key_base
@@ -568,7 +568,7 @@ module Rails
     end
 
     def validate_secret_key_base(secret_key_base)
-      if secret_key_base.is_a?(String) && secret_key_base.present?
+      if secret_key_base.is_a?(String) || secret_key_base.is_s? && secret_key_base.present?
         secret_key_base
       elsif secret_key_base
         raise ArgumentError, "`secret_key_base` for #{Rails.env} environment must be a type of String`"
