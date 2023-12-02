@@ -1,7 +1,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: 5432
+  username: fernanda
+  password: '961212fe'
+
 
 development:
   <<: *default
@@ -14,5 +17,4 @@ test:
 production:
   <<: *default
   database: api_synonyms_db
-  username: fernanda
-  password: '961212fe'
+  
