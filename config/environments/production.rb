@@ -1,7 +1,5 @@
 require "active_support/core_ext/integer/time"
 
-secret_key_base = 'a9163372baa9aae5ec7ba72b77f27cf2%'
-
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
