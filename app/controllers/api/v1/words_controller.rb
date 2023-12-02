@@ -1,8 +1,6 @@
-require 'debug'
 module Api
   module V1
     class WordsController < ApplicationController
-
       before_action :require_admin, only: [:método_que_requer_admin]
 
       def index
@@ -36,7 +34,6 @@ module Api
 
       def get_unreviewed_synonyms
         all_unreviewed_synonyms = Synonym.where(status: 0).includes(:word)
-        binding.b
 
         if all_unreviewed_synonyms.present?
           result = all_unreviewed_synonyms.group_by { |synonym| synonym.word.reference }.transform_values do |synonyms|

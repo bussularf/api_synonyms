@@ -1,5 +1,3 @@
-require 'debug'
-
 require Rails.root.join('lib', 'json_web_token')
 
 module Api
@@ -7,7 +5,6 @@ module Api
     class AuthenticationController < ApplicationController
       def login
         @user = User.find_by(username: params[:username])
-        binding.b
         if @user&.custom_authenticate(params[:username], params[:password])
           token = JsonWebToken.encode(user_id: @user.id)
           time = Time.zone.now + 24.hours.to_i
