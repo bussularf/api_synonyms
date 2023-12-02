@@ -77,3 +77,19 @@ GROUP BY w.reference;
 SELECT * FROM synonyms_count_view
 
 ```
+
+<table>
+  <tr>
+    <td><img src="/images/view1.png" alt="View 1"></td>
+    <td><img src="/images/view2.png" alt="View 2"></td>
+  </tr>
+</table>
+
+<img src="/images/root.png">
+<img src="/images/login.png">
+<img src="/images/index.png">
+<img src="/images/create.png">
+<img src="/images/review.png">
+<img src="/images/authorize.png">
+<img src="/images/delete.png">
+
