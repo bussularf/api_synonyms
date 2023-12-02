@@ -1,8 +1,6 @@
 module Api
   module V1
     class WordsController < ApplicationController
-      before_action :require_admin, only: [:método_que_requer_admin]
-
       def index
         words_and_synonyms = Word.includes(:synonyms)
                                   .where('words.id = synonyms.word_id AND synonyms.status = 1')
