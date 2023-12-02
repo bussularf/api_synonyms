@@ -10,6 +10,7 @@
   postgresql version 16.1
 
 * Deploy
+  http://api-synonyms-5ba648b892a3.herokuapp.com/api-docs/index.html
 
 ### Graphql query
 
