@@ -10,7 +10,6 @@
   postgresql version 16.1
 
 * Deploy
-  http://synonymsapi.fly.dev/api-docs/index.html
 
 ### Graphql query
 

@@ -1,4 +1,3 @@
-require 'debug'
 class ApplicationController < ActionController::API
   # rubocop:enable Lint/DuplicateBranch
   def authorize_request
