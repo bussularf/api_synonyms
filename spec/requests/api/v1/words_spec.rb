@@ -1,4 +1,5 @@
 # rubocop:disable all
+require 'debug'
 
 require 'rails_helper'
 require 'swagger_helper'
@@ -53,6 +54,7 @@ RSpec.describe 'api/v1/words', type: :request do
   path '/api/v1/words/unreviewed_synonyms' do
     let(:current_owner) { create(:user) }
     let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
+    binding.b
   
     context 'when unauthorized' do
       before { get '/api/v1/words/unreviewed_synonyms' }
