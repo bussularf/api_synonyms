@@ -5,23 +5,35 @@ require 'rails_helper'
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/words', type: :request do
+  let(:current_owner) { create(:user) }
+  let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
+  let!(:words) { create_list(:word, 5) }
 
-  path '/api/v1' do
-    get('list words') do
-      response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
+
+  describe 'GET /index' do
+    path '/api/v1' do
+      get('Get words') do
+        consumes 'application/json'
+        produces 'application/json'
+        let(:Authorization) { "Bearer #{token}" }
+
+        parameter name: 'Authorization', in: :header, type: :string
+
+        response(200, 'successful') do
+          after do |example|
+            example.metadata[:response][:content] = {
+              'application/json' => {
+                example: JSON.parse(response.body, symbolize_names: true)
+              }
             }
-          }
+          end
+          run_test!
         end
-        run_test!
-      end
 
-      response(400, 'bad request') do
-        'bad request'
-        run_test!
+        response(400, 'bad request') do
+          'bad request'
+          run_test!
+        end
       end
     end
   end
@@ -39,23 +51,16 @@ RSpec.describe 'api/v1/words', type: :request do
         }
       end
       response '201', 'synonym and/or word created' do
-        let(:word_and_synonym) { { reference: 'foo', synonym: 'bar' } }
         run_test!
       end
 
       response '422', 'invalid request' do
-        let(:word_and_synonym) {  { reference: 'foo', synonym: 'bar' } }
-
         run_test!
       end
     end
   end
 
   path '/api/v1/words/unreviewed_synonyms' do
-    let(:current_owner) { create(:user) }
-    let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
-    binding.b
-  
     context 'when unauthorized' do
       before { get '/api/v1/words/unreviewed_synonyms' }
   
@@ -89,9 +94,6 @@ RSpec.describe 'api/v1/words', type: :request do
   
 
   path '/api/v1/words/authorize_synonym' do
-    let(:current_owner) { create(:user) }
-    let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
-
     context 'when unauthorized' do
       before { get api_v1_words_path }
 
@@ -122,31 +124,13 @@ RSpec.describe 'api/v1/words', type: :request do
   end
 
   path '/api/v1/words/delete_synonym' do
-    let(:current_owner) { create(:user) }
-    let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
-
-    context 'when unauthorized' do
-      before { get api_v1_words_path }
-
-      it { expect(response).to have_http_status(:unauthorized) }
-    end
+    let(:Authorization) { "Bearer #{token}" }
 
     parameter name: 'reference', in: :query, type: :string, description: 'word'
     parameter name: 'synonym', in: :query, type: :string, description: 'synonym'
-    let!(:words) { example 'good' }
 
     delete('delete_synonym word') do
       response(200, 'successful') do
-        let(:reference) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-
         run_test!
       end
 

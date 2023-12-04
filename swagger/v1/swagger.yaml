@@ -39,7 +39,12 @@ paths:
               - data
   "/api/v1":
     get:
-      summary: list words
+      summary: Get words
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
       responses:
         '200':
           description: successful
