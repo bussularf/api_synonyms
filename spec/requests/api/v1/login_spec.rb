@@ -30,10 +30,6 @@ RSpec.describe 'AuthenticationController', type: :request do
             }
           end
 
-          before do
-            create(:user, data.merge(admin: true))
-          end
-
           schema type: :object, properties: {
             token: { type: :string },
             expires: { type: :string },
