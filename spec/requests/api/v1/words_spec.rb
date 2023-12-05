@@ -2,17 +2,16 @@
 require 'rails_helper'
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/words', type: :request do
-  before do
+RSpec.describe 'WordsController', type: :request do
     let(:current_owner) { create(:user) }
     let(:token) { JsonWebToken.encode(user_id: current_owner.id) }
-  end
 
-    describe 'GET /index' do
-      path '/api/v1' do
-        get('Get words') do
+    describe 'GET words#index' do
+      path '/api/v1/words' do
+        get 'get words' do
           consumes 'application/json'
           produces 'application/json'
+          tags :words
           before do
             let!(:words) { create_list(:word, 5) }
           end
@@ -37,7 +36,11 @@ RSpec.describe 'api/v1/words', type: :request do
     end
 
     path '/api/v1/words/search_synonyms' do
+
       get('List search_synonyms') do
+        consumes 'application/json'
+        produces 'application/json'
+        tags :words
         description 'List synonyms'
 
         parameter name: 'reference', in: :query, type: :string, description: 'word'
@@ -66,6 +69,9 @@ RSpec.describe 'api/v1/words', type: :request do
     parameter name: 'synonym', in: :query, type: :string, description: 'synonym'
 
     post('create_synonym_and_word') do
+      consumes 'application/json'
+      produces 'application/json'
+      tags :words
       after do |example|
         example.metadata[:response][:content] = {
           'application/json' => {
@@ -85,6 +91,9 @@ RSpec.describe 'api/v1/words', type: :request do
 
   path '/api/v1/words/unreviewed_synonyms' do
     get('unreviewed_synonyms word') do
+      consumes 'application/json'
+      produces 'application/json'
+      tags :words
       let(:authorization_header) { { 'Authorization' => "Bearer #{token}" } }
 
       before do
@@ -128,6 +137,9 @@ RSpec.describe 'api/v1/words', type: :request do
     parameter name: 'synonym', in: :query, type: :string, description: 'synonym'
 
     put('authorize_synonym word') do
+      consumes 'application/json'
+      produces 'application/json'
+      tags :words
       response(200, 'successful') do
         after do |example|
           example.metadata[:response][:content] = {
@@ -154,6 +166,9 @@ RSpec.describe 'api/v1/words', type: :request do
     parameter name: 'synonym', in: :query, type: :string, description: 'synonym'
 
     delete('delete_synonym word') do
+      consumes 'application/json'
+      produces 'application/json'
+      tags :words
       response(200, 'successful') do
         run_test!
       end

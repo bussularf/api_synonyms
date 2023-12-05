@@ -18,11 +18,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  token:
+                  reference:
                     type: string
-                  expires:
-                    type: string
-                  username:
+                  synonym:
                     type: string
       requestBody:
         content:
@@ -37,9 +35,11 @@ paths:
                   format: password
               required:
               - data
-  "/api/v1":
+  "/api/v1/words":
     get:
-      summary: Get words
+      summary: get words
+      tags:
+      - words
       responses:
         '200':
           description: successful
@@ -48,6 +48,8 @@ paths:
   "/api/v1/words/search_synonyms":
     get:
       summary: List search_synonyms
+      tags:
+      - words
       description: List synonyms
       parameters:
       - name: reference
@@ -74,6 +76,8 @@ paths:
         type: string
     post:
       summary: create_synonym_and_word
+      tags:
+      - words
       responses:
         '201':
           description: synonym and/or word created
@@ -82,6 +86,8 @@ paths:
   "/api/v1/words/unreviewed_synonyms":
     get:
       summary: unreviewed_synonyms word
+      tags:
+      - words
       responses:
         '200':
           description: successful
@@ -101,6 +107,8 @@ paths:
         type: string
     put:
       summary: authorize_synonym word
+      tags:
+      - words
       responses:
         '200':
           description: successful
@@ -120,6 +128,8 @@ paths:
         type: string
     delete:
       summary: delete_synonym word
+      tags:
+      - words
       responses:
         '200':
           description: successful

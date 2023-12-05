@@ -31,9 +31,8 @@ RSpec.describe 'AuthenticationController', type: :request do
           end
 
           schema type: :object, properties: {
-            token: { type: :string },
-            expires: { type: :string },
-            username: { type: :string }
+            reference: { type: :string },
+            synonym: { type: :string },
           }
 
           run_test!
