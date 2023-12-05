@@ -25,7 +25,7 @@ RSpec.describe 'AuthenticationController', type: :request do
         response '201', 'created' do
           let!(:data) do
             {
-              name: current_owner.username,
+              username: current_owner.username,
               password: '$dm!nhola123'
             }
           end

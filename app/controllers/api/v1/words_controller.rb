@@ -37,7 +37,7 @@ module Api
       def unreviewed_synonyms
         all_unreviewed_synonyms = Synonym.includes(:word).where(status: 0)
 
-        if all_unreviewed_synonyms.present? && @current_user&.admin?
+        if all_unreviewed_synonyms.present?
           render_synonyms_result(all_unreviewed_synonyms)
         else
           render_not_found_error('No unreviewed synonyms found for any word.')
