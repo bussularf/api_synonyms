@@ -1,6 +1,4 @@
 # rubocop:disable all
-require 'debug'
-
 require 'rails_helper'
 require 'swagger_helper'
 
@@ -43,7 +41,6 @@ RSpec.describe 'api/v1/words', type: :request do
         description 'List synonyms'
 
         parameter name: 'reference', in: :query, type: :string, description: 'word'
-        # binding.b
 
         response(200, 'successful') do
           after do |example|

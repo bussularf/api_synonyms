@@ -1,11 +1,10 @@
 module Api
   module V1
     class WordsController < ApplicationController
-      require  'debug'
       def index
         words_and_synonyms = Word.includes(:synonyms)
-                                  .where('words.id = synonyms.word_id AND synonyms.status = 1')
-                                  .pluck('words.reference AS word, synonyms.reference AS synonym')
+                                 .where('words.id = synonyms.word_id AND synonyms.status = 1')
+                                 .pluck('words.reference AS word, synonyms.reference AS synonym')
 
         result = words_and_synonyms.map { |ws| { word: ws[0], synonym: ws[1] } }
         render json: result
@@ -38,13 +37,12 @@ module Api
       def unreviewed_synonyms
         all_unreviewed_synonyms = Synonym.includes(:word).where(status: 0)
 
-        if all_unreviewed_synonyms.present?
+        if all_unreviewed_synonyms.present? && @current_user&.admin?
           render_synonyms_result(all_unreviewed_synonyms)
         else
           render_not_found_error('No unreviewed synonyms found for any word.')
         end
       end
-
 
       def authorize_synonym
         synonym = Synonym.find_by(reference: params[:synonym], status: 0)
@@ -74,7 +72,6 @@ module Api
       def group_synonyms_by_word(synonyms)
         synonyms.group_by { |synonym| synonym.word.reference }.transform_values { |synonyms| { synonyms: synonyms.pluck(:reference) } }
       end
-
 
       def load_synonyms
         if @current_user&.admin?
