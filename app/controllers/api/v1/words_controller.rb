@@ -1,6 +1,7 @@
 module Api
   module V1
     class WordsController < ApplicationController
+      require  'debug'
       def index
         words_and_synonyms = Word.includes(:synonyms)
                                   .where('words.id = synonyms.word_id AND synonyms.status = 1')
@@ -24,18 +25,26 @@ module Api
         end
       end
 
+      def search_synonyms
+        words_and_synonyms = load_synonyms
+
+        if words_and_synonyms.present?
+          render_synonyms_result(words_and_synonyms)
+        else
+          render_not_found_error('No synonyms found for this word.')
+        end
+      end
 
       def unreviewed_synonyms
         all_unreviewed_synonyms = Synonym.includes(:word).where(status: 0)
 
         if all_unreviewed_synonyms.present?
-          result = group_unreviewed_synonyms_by_reference(all_unreviewed_synonyms)
-
-          render json: result, status: :ok
+          render_synonyms_result(all_unreviewed_synonyms)
         else
-          render json: { error: 'No unreviewed synonyms found for any word.' }, status: :not_found
+          render_not_found_error('No unreviewed synonyms found for any word.')
         end
       end
+
 
       def authorize_synonym
         synonym = Synonym.find_by(reference: params[:synonym], status: 0)
@@ -62,10 +71,26 @@ module Api
 
       private
 
-      def group_unreviewed_synonyms_by_reference(unreviewed_synonyms)
-        unreviewed_synonyms.group_by { |synonym| synonym.word.reference }.transform_values do |synonyms|
-          { unreviewed_synonyms: synonyms.pluck(:reference) }
+      def group_synonyms_by_word(synonyms)
+        synonyms.group_by { |synonym| synonym.word.reference }.transform_values { |synonyms| { synonyms: synonyms.pluck(:reference) } }
+      end
+
+
+      def load_synonyms
+        if @current_user&.admin?
+          Synonym.includes(:word).where(words: { reference: params[:reference] })
+        else
+          Synonym.includes(:word).where(words: { reference: params[:reference] }, synonyms: { status: 1 })
         end
+      end
+
+      def render_synonyms_result(synonyms)
+        result = group_synonyms_by_word(synonyms)
+        render json: result, status: :ok
+      end
+
+      def render_not_found_error(message)
+        render json: { error: message }, status: :not_found
       end
     end
   end

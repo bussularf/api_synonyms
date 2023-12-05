@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         collection do
           post 'create_synonym_and_word'
           get 'unreviewed_synonyms'
+          get 'search_synonyms'
           put 'authorize_synonym'
           delete 'delete_synonym'
         end

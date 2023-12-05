@@ -40,9 +40,19 @@ paths:
   "/api/v1":
     get:
       summary: Get words
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+  "/api/v1/words/search_synonyms":
+    get:
+      summary: List search_synonyms
+      description: List synonyms
       parameters:
-      - name: Authorization
-        in: header
+      - name: reference
+        in: query
+        description: word
         schema:
           type: string
       responses:
