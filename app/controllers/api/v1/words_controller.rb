@@ -18,7 +18,6 @@ module Api
         if existing_synonym
           render json: { error: 'Synonym already exists for this word.' }, status: :unprocessable_entity
         else
-          # Cria o sinônimo apenas se não existir
           synonym = word.synonyms.create(reference: params[:synonym])
           render json: { word: word.reference, synonym: synonym.reference }, status: :created
         end
