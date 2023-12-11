@@ -1,5 +1,4 @@
 # Api Synonyms
-# Fitune-Challenge
 
 * Ruby version 3.2.2
 
